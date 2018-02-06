@@ -3,6 +3,16 @@
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
+ 
+
+For development purposes, you'll want access to your local database. Don't use the default 'postgres' account login/password in production. Obviously.
+
+``` bash
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+
+sudo /etc/init.d/postgresql restart
+```
+
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
