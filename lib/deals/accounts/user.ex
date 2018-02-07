@@ -1,8 +1,7 @@
 defmodule Deals.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Deals.Accounts.User
-
+  alias Deals.Accounts.{User, Encryption}
 
   schema "users" do
     field :email, :string
@@ -14,13 +13,31 @@ defmodule Deals.Accounts.User do
     
     timestamps()
   end
+  
+  @required_fields ~w(email username password)
+  @optional_fields ~w()
 
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:username, :email, :password_hash])
-    |> validate_required([:username, :email, :password_hash])
+    |> cast(attrs, @required_fields, @optional_fields)
+    |> validate_required([:username, :email])
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 6)
+    |> validate_confirmation(:password)
     |> unique_constraint(:email)
-    
+    |> encrypt_password
   end
+  
+  defp encrypt_password(changeset) do 
+    password = get_change(changeset, :password)
+    
+    if password do 
+      encrypted_password = Encryption.hash_password(password)
+      put_change(changeset, :password_hash, encrypted_password)
+    else
+      changeset
+    end
+  end
+  
 end
