@@ -6,9 +6,6 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item"><%= link "All Users", to: user_path(@conn, :index), class: "nav-link" %></li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
       </ul>
     <div class="text-right">
       <%= if logged_in?(@conn) do %>
