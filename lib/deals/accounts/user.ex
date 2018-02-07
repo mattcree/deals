@@ -8,7 +8,10 @@ defmodule Deals.Accounts.User do
     field :email, :string
     field :password_hash, :string
     field :username, :string
-
+    
+    field :password, :string, virtual: true
+    field :password_confirmation, :string, virtual: true
+    
     timestamps()
   end
 
@@ -18,5 +21,6 @@ defmodule Deals.Accounts.User do
     |> cast(attrs, [:username, :email, :password_hash])
     |> validate_required([:username, :email, :password_hash])
     |> unique_constraint(:email)
+    
   end
 end
