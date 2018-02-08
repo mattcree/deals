@@ -7,14 +7,27 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Deals!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Hello Bob!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
     <div class="container">
-     <%= render "_navbar.html", conn: @conn %>
+      <header class="header">
+        <nav role="navigation">
+          <ul class="nav nav-pills pull-right">
+            <li><a href="http://www.phoenixframework.org/docs">Home</a></li>
+          <%= if logged_in?(@conn) do %>
+            <p><%= current_user(@conn).username %></p>
+            <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete, class: "btn btn-secondary" %></li>
+          <% else %>
+            <li><%= link "Login", to: session_path(@conn, :new) %></li>
+            <li><%= link "Register", to: user_path(@conn, :new) %></li
+          <% end %>
+          </ul>
+        </nav>
+        <span class="logo"></span>
+      </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
@@ -27,3 +40,4 @@
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
+
