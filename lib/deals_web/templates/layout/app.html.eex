@@ -18,7 +18,7 @@
           <ul class="nav nav-pills pull-right">
             <li><a href="http://www.phoenixframework.org/docs">Home</a></li>
           <%= if logged_in?(@conn) do %>
-            <p><%= current_user(@conn).username %></p>
+            <li><a><%= current_user(@conn).username %></a></li>
             <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete, class: "btn btn-secondary" %></li>
           <% else %>
             <li><%= link "Login", to: session_path(@conn, :new) %></li>
