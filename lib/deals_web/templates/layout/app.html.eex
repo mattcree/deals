@@ -16,7 +16,7 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Home</a></li>
+            <li><a href="/">Home</a></li>
           <%= if logged_in?(@conn) do %>
             <li><a><%= current_user(@conn).username %></a></li>
             <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete, class: "btn btn-secondary" %></li>
