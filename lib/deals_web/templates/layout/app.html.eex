@@ -17,6 +17,7 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <li><a href="/">Home</a></li>
+            <li><%= link "Posts", to: deal_thread_path(@conn, :index), method: :get %></li>
           <%= if logged_in?(@conn) do %>
             <li><a><%= current_user(@conn).username %></a></li>
             <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete, class: "btn btn-secondary" %></li>

@@ -3,6 +3,7 @@ defmodule DealsWeb.UserController do
 
   alias Deals.Accounts
   alias Deals.Accounts.User
+  alias Deals.Posts
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -15,8 +16,17 @@ defmodule DealsWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    IO.inspect user_params
     case Accounts.create_user(user_params) do
-      {:ok, user} ->
+      {:ok, %User{id: user_id} = user} ->
+        case Posts.create_post_author(%{"user_id" => user_id}) do
+          {:ok, post_author} ->
+            conn
+            |> put_flash(:info, "User created successfully.")
+            |> redirect(to: user_path(conn, :show, user)) 
+          {:error, %Ecto.Changeset{} = changeset} ->
+            render(conn, "new.html", changeset: changeset)        
+        end
         conn
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: user_path(conn, :show, user))

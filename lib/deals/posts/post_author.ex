@@ -13,9 +13,9 @@ defmodule Deals.Posts.PostAuthor do
 
   @doc false
   def changeset(%PostAuthor{} = post_author, attrs) do
+    IO.inspect attrs
     post_author
-    |> cast(attrs, [:bio])
-    |> validate_required([:bio])
+    |> cast(attrs, [:user_id, :bio])
     |> unique_constraint(:user_id)
   end
 end

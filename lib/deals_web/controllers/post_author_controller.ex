@@ -14,17 +14,6 @@ defmodule DealsWeb.PostAuthorController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"post_author" => post_author_params}) do
-    case Posts.create_post_author(post_author_params) do
-      {:ok, post_author} ->
-        conn
-        |> put_flash(:info, "Post author created successfully.")
-        |> redirect(to: post_author_path(conn, :show, post_author))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
     post_author = Posts.get_post_author!(id)
     render(conn, "show.html", post_author: post_author)
