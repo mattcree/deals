@@ -45,7 +45,7 @@ CREATE TABLE deal_threads (
     price character varying(255),
     description character varying(255),
     url character varying(255),
-    rating integer,
+    rating integer DEFAULT 0,
     author_id bigint NOT NULL,
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -78,7 +78,7 @@ ALTER SEQUENCE deal_threads_id_seq OWNED BY deal_threads.id;
 CREATE TABLE post_authors (
     id bigint NOT NULL,
     bio character varying(255),
-    user_id bigint,
+    user_id bigint NOT NULL,
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -233,12 +233,12 @@ ALTER TABLE ONLY deal_threads
 --
 
 ALTER TABLE ONLY post_authors
-    ADD CONSTRAINT post_authors_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
+    ADD CONSTRAINT post_authors_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 
 --
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO "schema_migrations" (version) VALUES (20180207023211), (20180210111155), (20180210113117);
+INSERT INTO "schema_migrations" (version) VALUES (1), (2), (3);
 
