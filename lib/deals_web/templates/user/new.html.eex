@@ -1,5 +1,11 @@
-<h2>New User</h2>
+<div class="col-md-6 offset-md-3">
+  <div class="card">
 
-<%= render "form.html", Map.put(assigns, :action, user_path(@conn, :create)) %>
+    <h2 class="card-header">Sign Up</h2>
+    <div class="card-body">
+      <%= render "form.html", Map.put(assigns, :action, user_path(@conn, :create)) %>
+    </div>
+    <span><%= link "Back", to: user_path(@conn, :index) %></span>
 
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+  </div>
+</div>
