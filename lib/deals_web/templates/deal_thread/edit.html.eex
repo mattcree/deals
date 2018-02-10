@@ -1,0 +1,5 @@
+<h2>Edit Deal thread</h2>
+
+<%= render "form.html", Map.put(assigns, :action, deal_thread_path(@conn, :update, @deal_thread)) %>
+
+<span><%= link "Back", to: deal_thread_path(@conn, :index) %></span>

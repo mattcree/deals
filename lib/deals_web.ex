@@ -40,6 +40,7 @@ defmodule DealsWeb do
       import DealsWeb.Router.Helpers
       import DealsWeb.ErrorHelpers
       import DealsWeb.Gettext
+      import Deals.Accounts.Auth, only: [current_user: 1, logged_in?: 1]
     end
   end
 

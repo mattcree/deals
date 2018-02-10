@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Deals!</title>
+    <title>Hello Bob!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -16,7 +16,15 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
+            <li><a href="/">Home</a></li>
+            <li><%= link "Posts", to: deal_thread_path(@conn, :index), method: :get %></li>
+          <%= if logged_in?(@conn) do %>
+            <li><a><%= current_user(@conn).username %></a></li>
+            <li><%= link "Logout", to: session_path(@conn, :delete), method: :delete, class: "btn btn-secondary" %></li>
+          <% else %>
+            <li><%= link "Login", to: session_path(@conn, :new) %></li>
+            <li><%= link "Register", to: user_path(@conn, :new) %></li
+          <% end %>
           </ul>
         </nav>
         <span class="logo"></span>
@@ -33,3 +41,4 @@
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
+

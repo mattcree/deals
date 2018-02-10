@@ -1,0 +1,13 @@
+<h2>Show Post author</h2>
+
+<ul>
+
+  <li>
+    <strong>Bio:</strong>
+    <%= @post_author.bio %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: post_author_path(@conn, :edit, @post_author) %></span>
+<span><%= link "Back", to: post_author_path(@conn, :index) %></span>

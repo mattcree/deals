@@ -1,0 +1,43 @@
+<h2>Show Deal thread</h2>
+
+<ul>
+
+  <li>
+    <strong>Start date:</strong>
+    <%= @deal_thread.start_date %>
+  </li>
+
+  <li>
+    <strong>Expiry date:</strong>
+    <%= @deal_thread.expiry_date %>
+  </li>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @deal_thread.title %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @deal_thread.price %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @deal_thread.description %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @deal_thread.url %>
+  </li>
+
+  <li>
+    <strong>Rating:</strong>
+    <%= @deal_thread.rating %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: deal_thread_path(@conn, :edit, @deal_thread) %></span>
+<span><%= link "Back", to: deal_thread_path(@conn, :index) %></span>
