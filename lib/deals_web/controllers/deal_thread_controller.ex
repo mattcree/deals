@@ -1,8 +1,14 @@
 defmodule DealsWeb.DealThreadController do
   use DealsWeb, :controller
 
+  import Deals.Accounts.Auth
+
   alias Deals.Posts
   alias Deals.Posts.DealThread
+  alias Deals.Accounts.Auth
+  alias Deals.Accounts.User
+
+  plug :id_check when action in [:new, :create, :edit]
 
   def index(conn, _params) do
     deal_threads = Posts.list_deal_threads()
@@ -15,7 +21,11 @@ defmodule DealsWeb.DealThreadController do
   end
 
   def create(conn, %{"deal_thread" => deal_thread_params}) do
-    case Posts.create_deal_thread(deal_thread_params) do
+    %User{id: id} = Auth.current_user(conn)
+    author = Posts.get_author_id_by_user(id)
+    deal_thread_with_author = Map.put(deal_thread_params, "author_id", author)
+    IO.inspect deal_thread_with_author
+    case Posts.create_deal_thread(deal_thread_with_author) do
       {:ok, deal_thread} ->
         conn
         |> put_flash(:info, "Deal thread created successfully.")

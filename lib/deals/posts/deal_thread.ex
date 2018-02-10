@@ -20,7 +20,7 @@ defmodule Deals.Posts.DealThread do
   @doc false
   def changeset(%DealThread{} = deal_thread, attrs) do
     deal_thread
-    |> cast(attrs, [:start_date, :expiry_date, :title, :price, :description, :url, :rating])
-    |> validate_required([:start_date, :expiry_date, :title, :price, :description, :url, :rating])
+    |> cast(attrs, [:start_date, :expiry_date, :title, :price, :description, :url, :rating, :author_id])
+    |> validate_required([:start_date, :expiry_date, :title, :price, :description, :url, :rating, :author_id])
   end
 end

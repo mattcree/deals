@@ -102,6 +102,11 @@ defmodule Deals.Posts do
     PostAuthor.changeset(post_author, %{})
   end
 
+  def get_author_id_by_user(id) do
+    query = from author in PostAuthor, where: author.user_id == ^id, select: author.id
+    Repo.one(query)
+  end
+
   alias Deals.Posts.DealThread
 
   @doc """

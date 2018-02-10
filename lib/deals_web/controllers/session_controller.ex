@@ -30,5 +30,5 @@ defmodule DealsWeb.SessionController do
     |> redirect(to: "/")
   end
 
-
 end
+
