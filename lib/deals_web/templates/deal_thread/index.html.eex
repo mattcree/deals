@@ -1,0 +1,38 @@
+<h2>Listing Deal threads</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>Expiry date</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Url</th>
+      <th>Rating</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for deal_thread <- @deal_threads do %>
+    <tr>
+      <td><%= deal_thread.start_date %></td>
+      <td><%= deal_thread.expiry_date %></td>
+      <td><%= deal_thread.title %></td>
+      <td><%= deal_thread.price %></td>
+      <td><%= deal_thread.description %></td>
+      <td><%= deal_thread.url %></td>
+      <td><%= deal_thread.rating %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: deal_thread_path(@conn, :show, deal_thread), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: deal_thread_path(@conn, :edit, deal_thread), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: deal_thread_path(@conn, :delete, deal_thread), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Deal thread", to: deal_thread_path(@conn, :new) %></span>

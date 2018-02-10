@@ -1,0 +1,26 @@
+<h2>Listing Post authors</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Bio</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for post_author <- @post_authors do %>
+    <tr>
+      <td><%= post_author.bio %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: post_author_path(@conn, :show, post_author), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: post_author_path(@conn, :edit, post_author), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: post_author_path(@conn, :delete, post_author), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Post author", to: post_author_path(@conn, :new) %></span>
