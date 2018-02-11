@@ -24,7 +24,8 @@ defmodule DealsWeb.Router do
     
     resources "/users", UserController
     resources "/deals", DealThreadController
-    resources "/posts", PostAuthorController 
+    resources "/posts", PostAuthorController
+    resources "/comments", CommentController
   end
 
   # Other scopes may use custom stacks.

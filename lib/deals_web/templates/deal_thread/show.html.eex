@@ -39,5 +39,7 @@
 
 </ul>
 
+<%= render "comment_form.html", Map.put(assigns, :action, comment_path(@conn, :create)) %>
+
 <span><%= link "Edit", to: deal_thread_path(@conn, :edit, @deal_thread) %></span>
 <span><%= link "Back", to: deal_thread_path(@conn, :index) %></span>

@@ -34,6 +34,39 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: comments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE comments (
+    id bigint NOT NULL,
+    body character varying(255),
+    deal_thread_id bigint NOT NULL,
+    post_author_id bigint NOT NULL,
+    inserted_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE comments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
+
+
+--
 -- Name: deal_threads; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -150,6 +183,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY comments ALTER COLUMN id SET DEFAULT nextval('comments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY deal_threads ALTER COLUMN id SET DEFAULT nextval('deal_threads_id_seq'::regclass);
 
 
@@ -165,6 +205,14 @@ ALTER TABLE ONLY post_authors ALTER COLUMN id SET DEFAULT nextval('post_authors_
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
 
 
 --
@@ -200,6 +248,20 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: comments_deal_thread_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX comments_deal_thread_id_index ON comments USING btree (deal_thread_id);
+
+
+--
+-- Name: comments_post_author_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX comments_post_author_id_index ON comments USING btree (post_author_id);
+
+
+--
 -- Name: deal_threads_author_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -218,6 +280,22 @@ CREATE UNIQUE INDEX post_authors_user_id_index ON post_authors USING btree (user
 --
 
 CREATE UNIQUE INDEX users_email_index ON users USING btree (email);
+
+
+--
+-- Name: comments_deal_thread_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_deal_thread_id_fkey FOREIGN KEY (deal_thread_id) REFERENCES deal_threads(id) ON DELETE CASCADE;
+
+
+--
+-- Name: comments_post_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY comments
+    ADD CONSTRAINT comments_post_author_id_fkey FOREIGN KEY (post_author_id) REFERENCES post_authors(id) ON DELETE CASCADE;
 
 
 --
@@ -240,5 +318,5 @@ ALTER TABLE ONLY post_authors
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO "schema_migrations" (version) VALUES (1), (2), (3);
+INSERT INTO "schema_migrations" (version) VALUES (1), (2), (3), (4);
 

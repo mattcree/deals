@@ -5,6 +5,7 @@ defmodule DealsWeb.DealThreadController do
 
   alias Deals.Posts
   alias Deals.Posts.DealThread
+  alias Deals.Posts.Comment
   alias Deals.Accounts.Auth
   alias Deals.Accounts.User
 
@@ -37,7 +38,8 @@ defmodule DealsWeb.DealThreadController do
 
   def show(conn, %{"id" => id}) do
     deal_thread = Posts.get_deal_thread!(id)
-    render(conn, "show.html", deal_thread: deal_thread)
+    changeset = Posts.change_comment(%Comment{})
+    render(conn, "show.html", deal_thread: deal_thread, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do
