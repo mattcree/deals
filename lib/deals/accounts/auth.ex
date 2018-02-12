@@ -27,6 +27,14 @@ defmodule Deals.Accounts.Auth do
     if id, do: Deals.Repo.get(User, id)
   end
   
+  def current_user_id(conn) do
+    case current_user(conn) do
+      {:error, _} ->
+        {:error, "user doesn't exist"}
+      %User{"id": id} = user -> id
+    end
+  end
+
   def logged_in?(conn), do: !!current_user(conn)
 
   def id_check(conn, _opts) do

@@ -136,7 +136,10 @@ defmodule Deals.Posts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_deal_thread!(id), do: Repo.get!(DealThread, id)
+  def get_deal_thread!(id) do
+    Repo.get!(DealThread, id)
+    |> Repo.preload([[post_author: :user], [comments: [post_author: :user]]])
+  end
 
   @doc """
   Creates a deal_thread.
@@ -233,6 +236,11 @@ defmodule Deals.Posts do
 
   """
   def get_comment!(id), do: Repo.get!(Comment, id)
+
+  def get_comments_for_thread(id) do
+    query = from comment in Comment, where: comment.deal_thread_id == ^id
+    Repo.all(query)
+  end
 
   @doc """
   Creates a comment.

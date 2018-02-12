@@ -39,7 +39,24 @@
 
 </ul>
 
-<%= render "comment_form.html", Map.put(assigns, :action, comment_path(@conn, :create)) %>
+<%= render DealsWeb.CommentView, "form.html", changeset: @comment_changeset, action: deal_thread_comment_path(@conn, :create, @deal_thread) %>
+
+<table class="table">
+  <thead>
+    <tr>
+     <th>PostAuthor</th>
+     <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for comment <- @deal_thread.comments do %>
+    <tr>
+      <td><%= comment.post_author.user.username %></td>
+      <td><%= comment.body %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
 <span><%= link "Edit", to: deal_thread_path(@conn, :edit, @deal_thread) %></span>
 <span><%= link "Back", to: deal_thread_path(@conn, :index) %></span>

@@ -24,7 +24,7 @@ defmodule DealsWeb.DealThreadController do
   def create(conn, %{"deal_thread" => deal_thread_params}) do
     %User{id: id} = Auth.current_user(conn)
     author = Posts.get_author_id_by_user(id)
-    deal_thread_with_author = Map.put(deal_thread_params, "author_id", author)
+    deal_thread_with_author = Map.put(deal_thread_params, "post_author_id", author)
     IO.inspect deal_thread_with_author
     case Posts.create_deal_thread(deal_thread_with_author) do
       {:ok, deal_thread} ->
@@ -39,7 +39,7 @@ defmodule DealsWeb.DealThreadController do
   def show(conn, %{"id" => id}) do
     deal_thread = Posts.get_deal_thread!(id)
     changeset = Posts.change_comment(%Comment{})
-    render(conn, "show.html", deal_thread: deal_thread, changeset: changeset)
+    render(conn, "show.html", deal_thread: deal_thread, comment_changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do

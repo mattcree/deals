@@ -3,49 +3,28 @@ defmodule DealsWeb.CommentController do
 
   alias Deals.Posts
   alias Deals.Posts.Comment
+  alias Deals.Posts.DealThread
+  alias Deals.Accounts.User
+  alias Deals.Accounts.Auth
 
-  def index(conn, _params) do
-    comments = Posts.list_comments()
-    render(conn, "index.html", comments: comments)
-  end
+  plug :scrub_params, "comment" when action in [:create, :update]
 
-  def new(conn, _params) do
-    changeset = Posts.change_comment(%Comment{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
-  def create(conn, %{"comment" => comment_params}) do
-    case Posts.create_comment(comment_params) do
+  def create(conn, %{"comment" => comment_params, "deal_thread_id" => deal_thread_id}) do
+    post_author_id = Auth.current_user_id(conn)
+                     |> Posts.get_author_id_by_user
+    %DealThread{"id": thread_id} = deal_thread = Posts.get_deal_thread!(deal_thread_id)
+    full_comment = Map.merge(comment_params, %{"deal_thread_id" => thread_id,
+                                               "post_author_id" => post_author_id})
+    IO.inspect full_comment
+    case Posts.create_comment(full_comment) do
       {:ok, comment} ->
+        IO.inspect conn
+        IO.inspect comment
         conn
         |> put_flash(:info, "Comment created successfully.")
-        |> redirect(to: comment_path(conn, :show, comment))
+        |> redirect(to: deal_thread_path(conn, :show, deal_thread))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
-    end
-  end
-
-  def show(conn, %{"id" => id}) do
-    comment = Posts.get_comment!(id)
-    render(conn, "show.html", comment: comment)
-  end
-
-  def edit(conn, %{"id" => id}) do
-    comment = Posts.get_comment!(id)
-    changeset = Posts.change_comment(comment)
-    render(conn, "edit.html", comment: comment, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "comment" => comment_params}) do
-    comment = Posts.get_comment!(id)
-
-    case Posts.update_comment(comment, comment_params) do
-      {:ok, comment} ->
-        conn
-        |> put_flash(:info, "Comment updated successfully.")
-        |> redirect(to: comment_path(conn, :show, comment))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", comment: comment, changeset: changeset)
     end
   end
 

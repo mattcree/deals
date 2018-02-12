@@ -24,6 +24,9 @@ defmodule DealsWeb.Router do
     
     resources "/users", UserController
     resources "/deals", DealThreadController
+    resources "/deals", DealThreadController, only: [] do
+      resources "/comments", CommentController, only: [:create, :delete, :update]
+    end
     resources "/posts", PostAuthorController
     resources "/comments", CommentController
   end

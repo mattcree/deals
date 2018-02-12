@@ -2,12 +2,15 @@ defmodule Deals.Posts.PostAuthor do
   use Ecto.Schema
   import Ecto.Changeset
   alias Deals.Posts.PostAuthor
-
+  alias Deals.Posts.Comment
+  alias Deals.Posts.DealThread
+  alias Deals.Accounts.User
 
   schema "post_authors" do
     field :bio, :string
-    field :user_id, :id
-
+    has_many :comments, Comment
+    has_many :deal_threads, DealThread
+    belongs_to :user, User
     timestamps()
   end
 

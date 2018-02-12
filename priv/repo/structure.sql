@@ -79,7 +79,7 @@ CREATE TABLE deal_threads (
     description character varying(255),
     url character varying(255),
     rating integer DEFAULT 0,
-    author_id bigint NOT NULL,
+    post_author_id bigint NOT NULL,
     inserted_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -262,10 +262,10 @@ CREATE INDEX comments_post_author_id_index ON comments USING btree (post_author_
 
 
 --
--- Name: deal_threads_author_id_index; Type: INDEX; Schema: public; Owner: -
+-- Name: deal_threads_post_author_id_index; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX deal_threads_author_id_index ON deal_threads USING btree (author_id);
+CREATE INDEX deal_threads_post_author_id_index ON deal_threads USING btree (post_author_id);
 
 
 --
@@ -299,11 +299,11 @@ ALTER TABLE ONLY comments
 
 
 --
--- Name: deal_threads_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: deal_threads_post_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY deal_threads
-    ADD CONSTRAINT deal_threads_author_id_fkey FOREIGN KEY (author_id) REFERENCES post_authors(id) ON DELETE CASCADE;
+    ADD CONSTRAINT deal_threads_post_author_id_fkey FOREIGN KEY (post_author_id) REFERENCES post_authors(id) ON DELETE CASCADE;
 
 
 --

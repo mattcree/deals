@@ -10,12 +10,12 @@ defmodule Deals.Repo.Migrations.CreateDealThreads do
       add :description, :string
       add :url, :string
       add :rating, :integer, default: 0
-      add :author_id, references(:post_authors, on_delete: :delete_all),
+      add :post_author_id, references(:post_authors, on_delete: :delete_all),
                       null: false
 
       timestamps()
     end
 
-    create index(:deal_threads, [:author_id])
+    create index(:deal_threads, [:post_author_id])
   end
 end
