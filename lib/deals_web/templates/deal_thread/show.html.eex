@@ -1,43 +1,38 @@
-<h2>Show Deal thread</h2>
 
-<ul>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-sm-9">
+        <h3 class="pull-left"><%= @deal_thread.title %></h3>
+      </div>       
+      <div class="col-sm-3">
+        <h4 class="pull-right">
+          <small>Valid from <em><%= @deal_thread.inserted_at.day %>/<%= @deal_thread.inserted_at.month %>/<%= @deal_thread.inserted_at.year %></em></small>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-9">
+        <p class="pull-left"><%= @deal_thread.description %></p>
+      </div>
+      <div class="col-sm-3">
+        <p>Rating <%= @deal_thread.rating %></p>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-sm-9">
+      </div>
+      <div class="col-sm-3">
+        <a class="btn btn-danger" href="<%= @deal_thread.url %>" target="_blank">Go to Deal</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <li>
-    <strong>Start date:</strong>
-    <%= @deal_thread.start_date %>
-  </li>
-
-  <li>
-    <strong>Expiry date:</strong>
-    <%= @deal_thread.expiry_date %>
-  </li>
-
-  <li>
-    <strong>Title:</strong>
-    <%= @deal_thread.title %>
-  </li>
-
-  <li>
-    <strong>Price:</strong>
-    <%= @deal_thread.price %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @deal_thread.description %>
-  </li>
-
-  <li>
-    <strong>Url:</strong>
-    <%= @deal_thread.url %>
-  </li>
-
-  <li>
-    <strong>Rating:</strong>
-    <%= @deal_thread.rating %>
-  </li>
-
-</ul>
 
 <%= render DealsWeb.CommentView, "form.html", changeset: @comment_changeset, action: deal_thread_comment_path(@conn, :create, @deal_thread) %>
 
